@@ -1,0 +1,31 @@
+{
+  "Comment": "Assistente de Delivery com AWS Step Functions",
+  "StartAt": "Receber Pedido",
+  "States": {
+    "Receber Pedido": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:REGION:ACCOUNT_ID:function:ReceberPedido",
+      "Next": "Validar Pedido"
+    },
+    "Validar Pedido": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:REGION:ACCOUNT_ID:function:ValidarPedido",
+      "Next": "Processar Pagamento"
+    },
+    "Processar Pagamento": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:REGION:ACCOUNT_ID:function:ProcessarPagamento",
+      "Next": "Atualizar Status"
+    },
+    "Atualizar Status": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:REGION:ACCOUNT_ID:function:AtualizarStatus",
+      "Next": "Notificar Cliente"
+    },
+    "Notificar Cliente": {
+      "Type": "Task",
+      "Resource": "arn:aws:sns:REGION:ACCOUNT_ID:NotificacaoCliente",
+      "End": true
+    }
+  }
+}
